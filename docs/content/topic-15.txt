@@ -1,0 +1,9 @@
+These were used to explain limits, not proposed project features:
+  - True 3D graphics, free cameras, rigid-body physics, or arbitrary free movement.
+  - Very large concentrated battles with thousands of interacting combatants.
+  - Always-active, sophisticated AI across enormous populations.
+  - Seamless world simulation distributed across many machines with cross-boundary combat.
+  - Fast action-game collision, prediction, reconciliation, and tight latency-sensitive dodging.
+  - Unrestricted Minecraft-like terrain alteration.
+
+Jim's subsequent answers largely avoided these boundaries. Extensive new rules, custom stats, art, progression, items, and interfaces can still be substantial development projects, but do not by themselves imply the engine is unsuitable.

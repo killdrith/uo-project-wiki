@@ -1,0 +1,17 @@
+EXPLORATION ONLY:
+Jim asked whether a map four times Outlands' size would meaningfully increase load if entities were spatially controlled. He then explicitly corrected the framing: he did NOT want to implement such a map; he was exploring architecture boundaries.
+
+Do not create a "4x Outlands map" requirement or task.
+
+The architectural conclusion discussed:
+  - Four times area means twice width and height; four times both dimensions means sixteen times area.
+  - More geography is not automatically four times the simulation CPU.
+  - Local sector queries avoid searching an entire continent for nearby interactions.
+  - Terrain/static scenery add storage and memory more directly than ongoing AI work.
+  - Dormant entities still consume memory and may add save/load work.
+  - Active AI, timers, local density, and interaction complexity drive simulation cost.
+  - More widely spread players can activate more distinct areas, even while reducing crowding.
+
+ModernUO documentation inspected at the time described map blocks loading on demand and remaining cached without eviction. Thus exploration can increase long-running map memory residency. Optional pathfinding preprocessing can add memory, storage, and startup costs. Recheck these behaviors against the selected version.
+
+Any unusual dimensions would need validation across server, client, map format, editing tools, and pathfinding. No exact proposed dimensions or Outlands map dimensions were established. The content-production burden, travel time, and player encounter density could matter more than raw simulation cost.

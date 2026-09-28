@@ -1,0 +1,29 @@
+A different game with the visual style and much of the movement and combat feel of original Ultima Online.
+
+This wiki starts from the architecture and design handoff. It records intentions, recommendations, and questions; it is not an approved game specification.
+
+START HERE:
+  - Vision and user answers: topics 1 and 2.
+  - Platform options and customization: topics 4 and 5.
+  - Progression, creatures, and combat: topics 6 through 8.
+  - Art, visibility, and world: topics 9 through 12.
+  - Performance and persistence: topics 13 and 14.
+  - Open decisions and source trail: topics 16 and 18.
+
+STATUS KEY:
+  - User intention: an explicitly expressed preference, not necessarily a finalized design.
+  - Working recommendation: the prior assistant's judgment, subject to validation.
+  - Exploration: an idea considered to understand boundaries, not selected scope.
+  - Unresolved: a decision or technical claim still requiring work.
+
+CURRENT DIRECTION:
+ModernUO with ClassicUO is the leading recommendation, not a final selection. A dedicated downloadable client is acceptable. Most encounters should involve fewer than ten players. A connected passive tree is an interest; its rules remain open.
+
+IMPLEMENTATION STATUS:
+The handoff reports no completed server setup, benchmark, game implementation, or final platform selection in that conversation. Work in the separate Testing conversation is unknown. This wiki does not imply that those activities have happened.
+
+PROVENANCE:
+Source: UO-Project-Paperclip-Handoff.txt, prepared September 28, 2026, summarizing discussions from September 16 through 28. Technical claims are imported historical research, not freshly verified findings. The original local export path is omitted from this publication package. The attached original remains on the Paperclip task.
+
+MAINTAINING THIS WIKI:
+Edit the topic text files and run build_wiki.py with Python 3. New decisions should record the decision maker, date, status, and supporting evidence. A future approved design document supersedes conflicting exploratory notes. Topic 17 preserves the original suggested organization as historical context.

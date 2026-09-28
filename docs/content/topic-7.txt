@@ -1,0 +1,16 @@
+Jim asked whether Outlands uses reworked AI and whether ModernUO behavior is modifiable.
+
+Outlands' own overview describes custom creature AI and behaviors, with examples including thrown attacks, death explosions, and enemies working together. Patch notes document further creature-ability changes. This supports custom behavior; it does not establish how much of the underlying AI framework was replaced.
+
+ModernUO's inspected development documentation describes standard AI categories and custom AI assignment. Movement and decision-making belong in AI classes, while additional content behavior can use creature hooks and carefully timed logic.
+
+Relative effort discussed:
+  - Aggression range, movement pace, or attack timing: small changes.
+  - Special attacks, low-health enrages, death effects: small to moderate.
+  - Maintaining distance, ally healing, role-based targeting: moderate.
+  - Boss phases, summons, hazards, telegraphs: moderate to substantial.
+  - Coordinated flanking, retreats, reinforcements, and reliable complex navigation: substantial.
+
+A fighter/archer/healer/scout bandit group was an illustrative reusable behavior concept, not selected content.
+
+Design challenges include stuck creatures, target thrashing, unfun retreats, pathfinding cost, and excessive repeated searches. Consequential actions need actual cooldowns; a callback occurring more frequently must not grant extra attacks. Spatially bounded queries and sensible decision intervals matter.

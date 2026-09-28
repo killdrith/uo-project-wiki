@@ -1,0 +1,23 @@
+PRIOR RESEARCH SUMMARY:
+The imported discussion described Outlands as a heavily modified RunUO-derived server with extensive custom gameplay and infrastructure. It should not be characterized simply as stock RunUO with a handful of scripts.
+
+The conceptual stack discussed was:
+  Identity/account services
+    -> launcher and patch distribution
+    -> customized ClassicUO client and Razor assistant
+    -> UO protocol and shard-specific extensions
+    -> heavily modified authoritative server
+    -> persistence, archives, and backups.
+
+Public material was cited for a RunUO networking rewrite by Jaedan, broader network/data/map infrastructure work, and Kamron Batman joining Outlands to work on server performance. Public Outlands forks of ClassicUO, Razor, and FNA were used as evidence of client-side customization. The existence of a public fork does not establish that every currently deployed customization is public.
+
+Outlands' exact current server implementation, client validation handshake, and save internals were not established. Do not present inferred internals as confirmed facts.
+
+The imported conversation also discussed:
+  - OutlandsID as an email-based identity layer above multiple game accounts.
+  - A launcher handling installation, updates, file verification, compatible assets/client versions, and test-server access.
+  - Custom map/art/animation distribution.
+  - A restricted supported client/assistant environment.
+  - Professionally hosted infrastructure and historical network-accelerator use.
+
+These were architectural references, not instructions to reproduce Outlands' account limits, launcher, policies, identity system, or proprietary content.

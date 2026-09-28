@@ -1,0 +1,17 @@
+ModernUO + ClassicUO:
+  Leading recommendation because it offers a C# UO foundation, existing gameplay infrastructure, and performance-oriented engine work. Custom content and client extensions can be added without writing an MMO from scratch. Costs include learning its evolved APIs, persistence conventions, and maintaining compatibility with upstream changes. Old RunUO scripts may require porting.
+
+RunUO / the "RunUO 3" option described in the export + ClassicUO:
+  Discussed as a familiar C# alternative with historical scripts, knowledge, and direct lineage. The export described a .NET 8 modernization. That version/status claim should be rechecked before reuse. The assistant favored ModernUO's performance direction but did not perform a head-to-head benchmark.
+
+ServUO + ClassicUO:
+  Discussed as attractive when ready-made official-UO-era content is central. The assistant thought its large stock-content emphasis might be less useful for a heavily redesigned game. This was a project-fit judgment, not proof that ServUO cannot support extensive customization or that ModernUO has no stock content to replace.
+
+RustUO + ClassicUO:
+  Jim asked specifically about RustUO after noticing an apparent RunUO connection. The export distinguished a purported Rust rewrite from a direct rename of RunUO. Advertised features included real-time persistence, plugins, monitoring, administration, and performance. The prior assistant reported stale roadmap/download information and broken or unavailable source/documentation links. Those observations are historical and unverified in this handoff; do not turn them into current wiki facts without fresh research. The essential unresolved issue was maturity and inspectability, not whether Rust is a capable language. Jim's preference against experimental engine foundations made it a weaker working choice.
+
+Official UO client:
+  Discussed as a possible compatibility reference, but a poor primary target for this vision because custom UI, effects, stats, and interaction would be constrained. Jim subsequently confirmed that requiring a dedicated client is acceptable.
+
+Razor:
+  Treated as a separate assistant layer for macros, hotkeys, agents, and scripting. Razor Community Edition was proposed as a possible starting point, with a fork only if needed. No assistant choice or automation policy was decided.

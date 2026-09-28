@@ -1,0 +1,19 @@
+Jim noticed low-frame spell effects despite smooth running animations and asked whether server synchronization causes this.
+
+The discussed answer:
+  - Many effects are initiated by a server message, then animated locally using client-installed assets and timing.
+  - The server does not ordinarily approve or transmit every individual visual frame.
+  - More effect frames do not inherently require more network messages or a faster simulation tick.
+  - Artwork frame count, animation playback rate, and screen rendering FPS are different quantities.
+  - Smooth positional movement can make a short character animation appear smoother than a stationary effect.
+
+The inspected ClassicUO code advances effect frames on local timing and reads traditional animdata.mul records with 64 frame-offset entries plus count/interval fields. This is a limit of that legacy representation, NOT a universal limit for all animations or a mandatory limit for a custom client.
+
+Possible approaches:
+  - Add richer frame sequences using the existing art/effect formats and tune playback.
+  - Modify playback timing where necessary.
+  - Extend the client with a longer-sequence sprite or particle system if justified later.
+
+Upstream ClassicUO settings inspected in the discussion defaulted to 60 FPS. This is not a measured player average or a verified default for every shard fork. A 60-FPS renderer can still display an effect whose image changes only 10 or 30 times per second. Raising render FPS alone does not create missing artwork frames.
+
+The assistant suggested testing 60-FPS rendering with effects authored for roughly 30 animation frames per second. This was a starting suggestion, not an established art standard. Higher-frame animation mainly adds art work, asset storage, and client resource costs. Impact visuals should agree with authoritative damage timing.

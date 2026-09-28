@@ -1,0 +1,26 @@
+Movement and combat:
+  Jim does not expect to move far from UO's movement/combat feel. After discussing aimed attacks, he said ground targeting, cones, telegraphs, and slower dodgeable projectiles are a good place to aim and that nothing beyond those is really necessary.
+
+Graphics and world representation:
+  No rotating camera, free vertical movement, or 3D presentation is desired. Custom art, sprites, and animations should match original UO's style as closely as possible.
+
+Encounter size:
+  Most encounters should involve fewer than ten players. A few encounters requiring more could be interesting, but massive encounters should not define peak content. Jim dislikes how large UO battles combine a limited visible area, character crowding/blocking, and excessive effects into clutter. Ways of alleviating clutter remain open for exploration.
+
+Offscreen activity:
+  At least 90% of areas could become inactive when players are absent. A few areas with opposing enemies engaged in an ongoing war could be interesting. This is an exploratory interest, not a requirement for a world-wide continuous simulation.
+
+Maps and housing:
+  Jim said he does not expect to aim for custom maps/housing, at least initially, and clarified the housing experience he likes: a large curated selection of premade houses, as he understands Outlands to provide, rather than player-designed building layouts. The attraction is a cohesive environment with substantial choice without arbitrary player constructions disrupting its style. Do not infer an approved custom continent or player construction system.
+
+World transitions:
+  Outlands-like transitions are acceptable. Attacks do not need to cross boundaries. Seamless distributed simulation is not a requirement.
+
+Client control:
+  Requiring a custom downloadable client is acceptable. Broad compatibility is not a priority. Players should perceive this as functionally a separate game. Browser and mobile support were not established as requirements.
+
+Existing UO systems:
+  Almost every system would probably be reworked eventually, at least somewhat. Containers/inventory may remain relatively close to the existing model. Jim requested clarification of tile movement rather than expressing an intention to replace it.
+
+Persistence:
+  Jim suggested starting with saves approximately once an hour, then potentially extending to multiple hours after months of good operation. This is a preference under discussion, not a final recovery policy. See the persistence section for the separate question of acceptable lost progress.

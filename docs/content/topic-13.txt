@@ -1,0 +1,21 @@
+The imported conversation initially raised single-threaded gameplay as a concern for thousands of active players. Jim challenged that framing because Outlands supports thousands of simultaneous connections. The later answer refined the concern: one game thread alone is not evidence that a few thousand connections are infeasible.
+
+Important distinctions:
+  - Connected clients are not the same as distinct humans.
+  - Idle clients are not equivalent to actively fighting clients.
+  - Thousands spread across a world are not equivalent to thousands fighting in one location.
+  - Existing entities are not equivalent to entities doing expensive work every update.
+
+Prior research connected Outlands' optimization history with ModernUO's maintainer and infrastructure lineage. It cited a maintainer statement about a derivative threading/networking stack at a tracked 3,600-client peak. A live count around 3,274 was also quoted in the imported conversation. These were time-specific reports, not current counts, independently reproduced benchmarks, or a capacity guarantee for stock ModernUO and our future custom game.
+
+The discussed performance model was an authoritative game thread surrounded by optimized networking, efficient timers, spatial queries, reduced allocations, and parallel persistence work. High single-core performance matters; extra cores do not automatically parallelize gameplay.
+
+Recommended design discipline:
+  - Event-driven effects rather than world-wide polling.
+  - Spatially bounded searches.
+  - Cached computed bonuses.
+  - Sensible AI/timer frequencies.
+  - Inactive or reduced-work distant areas.
+  - Profiling and workload-specific benchmarks rather than capacity promises.
+
+Jim's preference for mostly sub-ten-player encounters and mostly inactive offscreen areas is favorable, but does not establish a maximum shard population.

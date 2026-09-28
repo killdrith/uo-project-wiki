@@ -1,0 +1,17 @@
+USER INTENTION:
+Jim is interested in a profoundly customized UO experience, comparable to Outlands and potentially more customized in some areas. The intended identity is effectively a different game, while retaining the visual style and much of the movement/combat feel of original UO.
+
+Explicit interests include:
+  - Original monsters, including graphics and animations.
+  - Custom items.
+  - Highly distinctive gameplay and progression systems, comparable in scope to Outlands' Aspect system.
+  - Possibly new character statistics beyond Strength, Dexterity, and Intelligence.
+  - A point-allocation progression tree resembling Path of Exile's connected passive tree.
+  - Eventually revisiting almost every gameplay system, although inventory and containers may change relatively little.
+
+Jim does not want an engine rewrite or an untested, novel persistence architecture as the foundation.
+
+WORKING RECOMMENDATION:
+ModernUO server plus ClassicUO client remains the leading choice. Custom server modules, selective core changes, and an eventually customized ClassicUO client appear compatible with the intentions expressed so far. Nothing established in this discussion supplied a strong architectural reason to abandon that pairing.
+
+That is an assistant recommendation and working direction, not a final platform decision. There is no confirmed game name, release schedule, population target, budget, hosting provider, or complete ruleset.

@@ -1,0 +1,18 @@
+USER INTEREST:
+Jim asked how difficult it would be to increase the area around players that becomes active or visibly contains dynamic content. He observed that clients permit zooming out farther than the range at which creatures and other non-static entities appear.
+
+Four separate concepts must remain distinct:
+  1. Camera/zoom: how much of the world fits on screen.
+  2. Entity visibility/update range: what the server sends and the client retains.
+  3. Simulation activation: where creatures are awake and processing behavior.
+  4. Aggression/attack range: when creatures detect or engage targets.
+
+Terrain can remain visible because its data is installed locally, even when the server has not supplied distant dynamic entities. The inspected ClassicUO source also removes distant entities according to its client view range. ModernUO applies its own update-range checks. Both sides must be coordinated.
+
+A modest visibility extension was assessed as moderate integration work, not an engine replacement. A large extension requires auditing entity creation/removal, movement, effect distribution, and other distance-dependent behaviors. No exact maximum range was verified or selected.
+
+Seeing an enemy farther away does not require increasing its aggression range. Reduced-frequency distant simulation could be designed separately, but is not assumed to be a stock feature.
+
+Cost principle: doubling view radius covers approximately four times the area. At comparable density it can expose roughly four times as many entities, but does not necessarily quadruple total server cost. This differs from merely adding remote geography to a continent.
+
+The inspected ModernUO map code uses 16x16-tile sectors and a sector activation neighborhood. Sector activity is not the same as visual range, and activation hooks do not automatically guarantee that all custom timers stop.

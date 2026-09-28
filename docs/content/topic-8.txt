@@ -1,0 +1,15 @@
+USER INTENTION:
+Retain broadly UO-like movement and combat. Ground targeting, cones, telegraphs, and slower dodgeable projectiles are sufficient. Fast action combat with tiny hitboxes, precise dodge rolls, prediction/reconciliation, or continuous manual aiming is not currently needed.
+
+Tile movement explanation:
+The server represents positions on a tile grid, with movement in eight directions. The client smooths travel between positions. This permits positional combat even though authoritative movement is discrete.
+
+Character blocking is a separate gameplay rule. Tile movement does not by itself require absolute one-character-per-tile occupancy in every situation. Changes to collision/blocking could be considered independently; none were selected.
+
+Attack options discussed:
+  - Ground-targeted area: choose a location and strike it after a delay.
+  - Cone/beam: derive a hit area from a chosen direction or location.
+  - Telegraph: display danger, allow a reaction interval, then resolve the strike.
+  - Traveling skillshot: move an authoritative projectile or equivalent hit-test through space and allow it to miss.
+
+Critical distinction: a graphical projectile is not automatically a collision-aware server projectile. The server must determine valid hits, timing, obstructions, and damage; the client animation must agree with that result. Slow projectiles and forgiving hit areas fit the existing movement model better than split-second precision combat.

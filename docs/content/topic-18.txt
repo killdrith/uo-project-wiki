@@ -1,0 +1,63 @@
+These URLs are a source trail, not a claim that every linked page remains unchanged or that every prior assertion has been independently validated. Prefer upstream documentation and source code when verifying implementation. Capture commits/versions when development begins.
+
+Core platforms:
+  https://github.com/modernuo/ModernUO
+  https://github.com/modernuo/ModernUO/blob/main/FAQ.md
+  https://github.com/modernuo/ModernUO/blob/main/dev-docs/server-requirements.md
+  https://github.com/modernuo/ModernUO/blob/main/dev-docs/content-patterns.md
+  https://modernuo.com/docs/development/serialization/
+  https://modernuo.com/docs/getting-started/configuration/
+  https://github.com/modernuo/SerializationGenerator
+  https://github.com/RunUO-Team/RunUO
+  https://github.com/ServUO/ServUO
+  https://www.rustuo.org/
+  https://www.rustuo.org/downloads
+  https://www.rustuo.org/roadmap
+  https://www.rustuo.org/docs
+
+Client, extensions, and tools:
+  https://github.com/ClassicUO/ClassicUO
+  https://github.com/ClassicUO/ClassicUO/wiki/Launch-Arguments
+  https://github.com/ClassicUO/packets
+  https://github.com/modernuo/ModernUO-Client
+  https://github.com/markdwags/razor
+  https://github.com/lukus882/LiveGumpMod
+  https://uofiddler.polserver.com/
+  https://github.com/praxiiz/UltimaLive
+  https://github.com/modernuo/UltimaLive
+
+Source inspected for specific architectural questions:
+  https://github.com/modernuo/ModernUO/blob/main/Projects/Server/Maps/Map.cs
+  https://github.com/modernuo/ModernUO/blob/main/Projects/Server/Mobiles/Mobile.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/World.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/GameObjects/Mobile.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/GameObjects/GameEffect.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/GameObjects/MovingEffect.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/Managers/EffectManager.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Assets/AnimDataLoader.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Configuration/Settings.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/UI/Gumps/MacroGump.cs
+
+Outlands primary material:
+  https://uooutlands.com/about/
+  https://uooutlands.com/news/state-of-the-shard-winter-2019/
+  https://uooutlands.com/news/lag-is-gone/
+  https://uooutlands.com/news/welcome-developer-kamron/
+  https://uooutlands.com/news/classicuo-exclusive-client/
+  https://uooutlands.com/news/client-enforcement/
+  https://uooutlands.com/news/global-connection-accelerator/
+  https://uooutlands.com/connecting/
+  https://uooutlands.com/rules/
+  https://github.com/UOOutlands
+  https://wiki.uooutlands.com/ClassicUO_for_Outlands
+  https://wiki.uooutlands.com/OutlandsID
+  https://wiki.uooutlands.com/Server_Saves
+  https://uooutlands.com/news/patch-monster-rebalance-pack-ox-mechanic-changes-and-more/
+  https://uooutlands.com/news/patch-jun-7-dungeon-overhaul-murder-count-changes-customizations-and-so-much-more/
+  https://uooutlands.com/news/patch-so-many-qol-updates-more/
+
+Additional historical research trail:
+  https://github.com/kamronbatman
+  https://www.uoservers.com/
+  https://www.servuo.dev/threads/state-of-project.15799/
+  https://www.reddit.com/r/ultimaonline/comments/1806nft

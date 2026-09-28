@@ -1,0 +1,16 @@
+EXPLORATION ONLY:
+Jim asked about the difficulty of demolishing arbitrary buildings and reshaping terrain because he had not considered them much. Neither was adopted as a requirement.
+
+Manageable controlled examples:
+  - A deliberately destructible gate or wall with health.
+  - Intact/damaged/rubble states authored in advance.
+  - Scripted encounter changes that update passage and collision.
+
+Substantially harder systems:
+  - Arbitrary demolition of existing buildings.
+  - Structural support and cascading collapse.
+  - Handling upper floors, occupants, stored possessions, ownership, repairs, and persistence.
+  - Arbitrary terrain excavation or elevation changes.
+  - Keeping collision, line of sight, pathfinding caches, and all clients synchronized.
+
+A removable server-side object differs from a wall baked into static map data. Existing map-streaming projects such as UltimaLive establish that live changes are possible; they do not provide a complete destruction simulation or guarantee turnkey compatibility with a chosen client build.

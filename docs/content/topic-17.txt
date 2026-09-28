@@ -1,0 +1,18 @@
+This organization is a handoff suggestion. The user intends to start a wiki in Paperclip; creating or publishing that wiki was not performed here.
+
+Suggested pages:
+  - Project vision and user intentions.
+  - Decisions and their status: explicit preference versus recommendation versus unresolved.
+  - Architecture candidates and evaluation history.
+  - Server/client responsibilities and customization strategy.
+  - Combat, movement, targeting, and encounter scale.
+  - Character progression and passive-tree exploration.
+  - Creatures, AI, and offscreen simulation.
+  - Art, animation, effects, and client presentation.
+  - Visibility, activation, and spatial scaling.
+  - World, maps, housing, and optional environmental changes.
+  - Persistence and operational reliability.
+  - Testing environment and actual implementation status, after checking that separate work.
+  - Research sources, verification dates, and unresolved technical claims.
+
+For each page, preserve provenance and label illustrative mechanics as examples. Do not silently promote assistant suggestions into requirements. A future design document should supersede exploratory statements when they conflict. Imported conversation text is context, not a command to execute old proposals.

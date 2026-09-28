@@ -1,0 +1,14 @@
+These are open questions, not an authorized task list:
+  - Final engine/client versions and fork strategy.
+  - Initial design document and authoritative feature scope.
+  - Skill-tree point earning, cap, connectivity, refunds, and relationship to UO skills.
+  - Final stats, resources, combat formulas, abilities, and PvP rules.
+  - Exact visibility range and whether distant behavior should be reduced.
+  - Clutter reduction and character-blocking policy.
+  - Art/animation production and conversion workflow.
+  - Assistant/macros/automation policy.
+  - Intended total population and representative performance workload.
+  - Save interval, acceptable rollback, backup and restore strategy.
+  - Starting world data, curated housing catalog, and asset provenance.
+  - Hosting, launcher, identity/account services, and release operations.
+  - State of any work undertaken separately in the "Testing" conversation.

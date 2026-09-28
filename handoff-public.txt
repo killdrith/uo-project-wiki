@@ -1,0 +1,455 @@
+UO PROJECT: ARCHITECTURE AND DESIGN EXPLORATION
+Detailed conversation handoff for Paperclip and future wiki creation
+Prepared: September 28, 2026
+
+PURPOSE AND AUTHORITY
+
+This document summarizes the imported website conversation, "Explore UO Server Architecture" (September 16-20, 2026), and the subsequent discussion in this project through September 28, 2026. It is intended to let a new assistant continue the conversation and organize a project wiki without losing important context.
+
+This is a discussion summary, NOT the initial game design document, an implementation specification, or an approved development backlog.
+
+Jim explicitly explained that he was exploring architectural boundaries, not requesting implementation of every feature discussed. He will provide an initial design document when ready for development; that document should establish his intentions clearly. Preserve the difference between:
+  - USER INTENTION: Something Jim explicitly wants or prefers.
+  - WORKING RECOMMENDATION: The assistant's current architectural judgment.
+  - EXPLORATION: A possibility discussed to understand difficulty or limitations.
+  - UNRESOLVED: Something that still requires design decisions or verification.
+
+Technical research below describes what was discussed and inspected during the conversations. It was not comprehensively revalidated when this summary was prepared. Repository links generally point to moving branches, not pinned versions. Prior assistant claims are not equivalent to verified requirements or production guarantees. In particular, recheck engine versions, RustUO project status, save implementation, client limits, and Outlands population figures before making engineering decisions.
+
+The source website export is at:
+[Original local export path omitted]
+
+No server setup, benchmark, game implementation, or final platform selection was completed in this conversation. Jim mentioned creating a separate conversation called "Testing" for first steps and possibly standing up a private server. This summary does not claim to know what happened in that separate conversation.
+
+
+1. OVERALL VISION AND CURRENT PLATFORM DIRECTION
+
+USER INTENTION:
+Jim is interested in a profoundly customized UO experience, comparable to Outlands and potentially more customized in some areas. The intended identity is effectively a different game, while retaining the visual style and much of the movement/combat feel of original UO.
+
+Explicit interests include:
+  - Original monsters, including graphics and animations.
+  - Custom items.
+  - Highly distinctive gameplay and progression systems, comparable in scope to Outlands' Aspect system.
+  - Possibly new character statistics beyond Strength, Dexterity, and Intelligence.
+  - A point-allocation progression tree resembling Path of Exile's connected passive tree.
+  - Eventually revisiting almost every gameplay system, although inventory and containers may change relatively little.
+
+Jim does not want an engine rewrite or an untested, novel persistence architecture as the foundation.
+
+WORKING RECOMMENDATION:
+ModernUO server plus ClassicUO client remains the leading choice. Custom server modules, selective core changes, and an eventually customized ClassicUO client appear compatible with the intentions expressed so far. Nothing established in this discussion supplied a strong architectural reason to abandon that pairing.
+
+That is an assistant recommendation and working direction, not a final platform decision. There is no confirmed game name, release schedule, population target, budget, hosting provider, or complete ruleset.
+
+
+2. USER ANSWERS TO THE ARCHITECTURAL DESIGN QUESTIONS
+
+Movement and combat:
+  Jim does not expect to move far from UO's movement/combat feel. After discussing aimed attacks, he said ground targeting, cones, telegraphs, and slower dodgeable projectiles are a good place to aim and that nothing beyond those is really necessary.
+
+Graphics and world representation:
+  No rotating camera, free vertical movement, or 3D presentation is desired. Custom art, sprites, and animations should match original UO's style as closely as possible.
+
+Encounter size:
+  Most encounters should involve fewer than ten players. A few encounters requiring more could be interesting, but massive encounters should not define peak content. Jim dislikes how large UO battles combine a limited visible area, character crowding/blocking, and excessive effects into clutter. Ways of alleviating clutter remain open for exploration.
+
+Offscreen activity:
+  At least 90% of areas could become inactive when players are absent. A few areas with opposing enemies engaged in an ongoing war could be interesting. This is an exploratory interest, not a requirement for a world-wide continuous simulation.
+
+Maps and housing:
+  Jim said he does not expect to aim for custom maps/housing, at least initially, and clarified the housing experience he likes: a large curated selection of premade houses, as he understands Outlands to provide, rather than player-designed building layouts. The attraction is a cohesive environment with substantial choice without arbitrary player constructions disrupting its style. Do not infer an approved custom continent or player construction system.
+
+World transitions:
+  Outlands-like transitions are acceptable. Attacks do not need to cross boundaries. Seamless distributed simulation is not a requirement.
+
+Client control:
+  Requiring a custom downloadable client is acceptable. Broad compatibility is not a priority. Players should perceive this as functionally a separate game. Browser and mobile support were not established as requirements.
+
+Existing UO systems:
+  Almost every system would probably be reworked eventually, at least somewhat. Containers/inventory may remain relatively close to the existing model. Jim requested clarification of tile movement rather than expressing an intention to replace it.
+
+Persistence:
+  Jim suggested starting with saves approximately once an hour, then potentially extending to multiple hours after months of good operation. This is a preference under discussion, not a final recovery policy. See the persistence section for the separate question of acceptable lost progress.
+
+
+3. WHAT WAS LEARNED ABOUT OUTLANDS' ARCHITECTURE
+
+PRIOR RESEARCH SUMMARY:
+The imported discussion described Outlands as a heavily modified RunUO-derived server with extensive custom gameplay and infrastructure. It should not be characterized simply as stock RunUO with a handful of scripts.
+
+The conceptual stack discussed was:
+  Identity/account services
+    -> launcher and patch distribution
+    -> customized ClassicUO client and Razor assistant
+    -> UO protocol and shard-specific extensions
+    -> heavily modified authoritative server
+    -> persistence, archives, and backups.
+
+Public material was cited for a RunUO networking rewrite by Jaedan, broader network/data/map infrastructure work, and Kamron Batman joining Outlands to work on server performance. Public Outlands forks of ClassicUO, Razor, and FNA were used as evidence of client-side customization. The existence of a public fork does not establish that every currently deployed customization is public.
+
+Outlands' exact current server implementation, client validation handshake, and save internals were not established. Do not present inferred internals as confirmed facts.
+
+The imported conversation also discussed:
+  - OutlandsID as an email-based identity layer above multiple game accounts.
+  - A launcher handling installation, updates, file verification, compatible assets/client versions, and test-server access.
+  - Custom map/art/animation distribution.
+  - A restricted supported client/assistant environment.
+  - Professionally hosted infrastructure and historical network-accelerator use.
+
+These were architectural references, not instructions to reproduce Outlands' account limits, launcher, policies, identity system, or proprietary content.
+
+
+4. SERVER AND CLIENT OPTIONS THAT WERE COMPARED
+
+ModernUO + ClassicUO:
+  Leading recommendation because it offers a C# UO foundation, existing gameplay infrastructure, and performance-oriented engine work. Custom content and client extensions can be added without writing an MMO from scratch. Costs include learning its evolved APIs, persistence conventions, and maintaining compatibility with upstream changes. Old RunUO scripts may require porting.
+
+RunUO / the "RunUO 3" option described in the export + ClassicUO:
+  Discussed as a familiar C# alternative with historical scripts, knowledge, and direct lineage. The export described a .NET 8 modernization. That version/status claim should be rechecked before reuse. The assistant favored ModernUO's performance direction but did not perform a head-to-head benchmark.
+
+ServUO + ClassicUO:
+  Discussed as attractive when ready-made official-UO-era content is central. The assistant thought its large stock-content emphasis might be less useful for a heavily redesigned game. This was a project-fit judgment, not proof that ServUO cannot support extensive customization or that ModernUO has no stock content to replace.
+
+RustUO + ClassicUO:
+  Jim asked specifically about RustUO after noticing an apparent RunUO connection. The export distinguished a purported Rust rewrite from a direct rename of RunUO. Advertised features included real-time persistence, plugins, monitoring, administration, and performance. The prior assistant reported stale roadmap/download information and broken or unavailable source/documentation links. Those observations are historical and unverified in this handoff; do not turn them into current wiki facts without fresh research. The essential unresolved issue was maturity and inspectability, not whether Rust is a capable language. Jim's preference against experimental engine foundations made it a weaker working choice.
+
+Official UO client:
+  Discussed as a possible compatibility reference, but a poor primary target for this vision because custom UI, effects, stats, and interaction would be constrained. Jim subsequently confirmed that requiring a dedicated client is acceptable.
+
+Razor:
+  Treated as a separate assistant layer for macros, hotkeys, agents, and scripting. Razor Community Edition was proposed as a possible starting point, with a fork only if needed. No assistant choice or automation policy was decided.
+
+
+5. HOW TO ORGANIZE EXTENSIVE CUSTOMIZATION
+
+WORKING RECOMMENDATION:
+Keep custom game systems in clear modules where practical. Make focused core changes when a mechanic genuinely belongs in shared entity, combat, movement, or networking code. Preserve the ability to incorporate useful upstream fixes.
+
+Examples discussed:
+  - Additional stats could initially belong to custom player/creature data instead of immediately changing every base Mobile.
+  - A universal new resource with regeneration, damage, AI interactions, and network/UI support could eventually justify deeper entity changes.
+  - Custom packets can communicate new statistics and progression information to the client.
+  - Server code remains authoritative; the client displays state and submits requests.
+  - Custom monster behavior is server-side, while body art, sounds, and animation frames must be available to the client.
+
+Names such as Vitality, Wisdom, Spirit, Resolve, DragonLord, Ash Wyrm, and a "Path of the Titan" system were illustrative assistant examples. They are NOT selected features, lore, or terminology.
+
+The conversation initially suggested using stock ClassicUO for early prototypes, then increasingly anticipated a custom client as the vision became clearer. These are compatible approaches: owning the eventual client does not require implementing every customization before a first test.
+
+
+6. CONNECTED PASSIVE / SKILL-POINT TREE
+
+USER INTENTION:
+Jim wants to explore implementing a point system similar to Path of Exile's skill tree. The assistant interpreted this as earning points and allocating them through connected passive nodes. Exact progression rules remain undecided.
+
+Proposed components:
+  - Point earning, caps, starting nodes, prerequisites, and connectivity checks.
+  - Persistent per-character allocations and unspent points.
+  - Bonuses, unlocks, and playstyle-changing mechanics.
+  - Allocation and refund validation on the server.
+  - Client presentation with connections, tooltips, state highlighting, and potentially panning, zoom, and search.
+  - A versioning/migration policy will be needed if node definitions change; this is a future design concern, not a resolved implementation.
+
+A small prototype could use a server-driven UO window. A large, fluid tree would likely warrant a dedicated ClassicUO interface.
+
+The assistant suggested supplementing UO skills first: for example, a skill determines access to spells while passives specialize their use. Replacing parts of the skill system remains possible. Jim did not decide between supplementation and replacement.
+
+Ordinary bonuses could be recalculated when builds change and cached. Combat should consult relevant totals/effects rather than scan every tree node on every hit. A tree's difficulty depends more on what nodes do and how they interact than on the number of visible nodes.
+
+Illustrative node examples included more health, longer poison duration, health-funded casting, a single stronger pet, and a damage-for-health tradeoff. These were not approved abilities or balance values. An initial 30-50-node prototype was an assistant suggestion, not an agreed milestone.
+
+
+7. CREATURE AI AND ENCOUNTER BEHAVIOR
+
+Jim asked whether Outlands uses reworked AI and whether ModernUO behavior is modifiable.
+
+Outlands' own overview describes custom creature AI and behaviors, with examples including thrown attacks, death explosions, and enemies working together. Patch notes document further creature-ability changes. This supports custom behavior; it does not establish how much of the underlying AI framework was replaced.
+
+ModernUO's inspected development documentation describes standard AI categories and custom AI assignment. Movement and decision-making belong in AI classes, while additional content behavior can use creature hooks and carefully timed logic.
+
+Relative effort discussed:
+  - Aggression range, movement pace, or attack timing: small changes.
+  - Special attacks, low-health enrages, death effects: small to moderate.
+  - Maintaining distance, ally healing, role-based targeting: moderate.
+  - Boss phases, summons, hazards, telegraphs: moderate to substantial.
+  - Coordinated flanking, retreats, reinforcements, and reliable complex navigation: substantial.
+
+A fighter/archer/healer/scout bandit group was an illustrative reusable behavior concept, not selected content.
+
+Design challenges include stuck creatures, target thrashing, unfun retreats, pathfinding cost, and excessive repeated searches. Consequential actions need actual cooldowns; a callback occurring more frequently must not grant extra attacks. Spatially bounded queries and sensible decision intervals matter.
+
+
+8. MOVEMENT, AIMED ATTACKS, AND COLLISION
+
+USER INTENTION:
+Retain broadly UO-like movement and combat. Ground targeting, cones, telegraphs, and slower dodgeable projectiles are sufficient. Fast action combat with tiny hitboxes, precise dodge rolls, prediction/reconciliation, or continuous manual aiming is not currently needed.
+
+Tile movement explanation:
+The server represents positions on a tile grid, with movement in eight directions. The client smooths travel between positions. This permits positional combat even though authoritative movement is discrete.
+
+Character blocking is a separate gameplay rule. Tile movement does not by itself require absolute one-character-per-tile occupancy in every situation. Changes to collision/blocking could be considered independently; none were selected.
+
+Attack options discussed:
+  - Ground-targeted area: choose a location and strike it after a delay.
+  - Cone/beam: derive a hit area from a chosen direction or location.
+  - Telegraph: display danger, allow a reaction interval, then resolve the strike.
+  - Traveling skillshot: move an authoritative projectile or equivalent hit-test through space and allow it to miss.
+
+Critical distinction: a graphical projectile is not automatically a collision-aware server projectile. The server must determine valid hits, timing, obstructions, and damage; the client animation must agree with that result. Slow projectiles and forgiving hit areas fit the existing movement model better than split-second precision combat.
+
+
+9. SPELL ANIMATIONS AND CLIENT FRAME RATE
+
+Jim noticed low-frame spell effects despite smooth running animations and asked whether server synchronization causes this.
+
+The discussed answer:
+  - Many effects are initiated by a server message, then animated locally using client-installed assets and timing.
+  - The server does not ordinarily approve or transmit every individual visual frame.
+  - More effect frames do not inherently require more network messages or a faster simulation tick.
+  - Artwork frame count, animation playback rate, and screen rendering FPS are different quantities.
+  - Smooth positional movement can make a short character animation appear smoother than a stationary effect.
+
+The inspected ClassicUO code advances effect frames on local timing and reads traditional animdata.mul records with 64 frame-offset entries plus count/interval fields. This is a limit of that legacy representation, NOT a universal limit for all animations or a mandatory limit for a custom client.
+
+Possible approaches:
+  - Add richer frame sequences using the existing art/effect formats and tune playback.
+  - Modify playback timing where necessary.
+  - Extend the client with a longer-sequence sprite or particle system if justified later.
+
+Upstream ClassicUO settings inspected in the discussion defaulted to 60 FPS. This is not a measured player average or a verified default for every shard fork. A 60-FPS renderer can still display an effect whose image changes only 10 or 30 times per second. Raising render FPS alone does not create missing artwork frames.
+
+The assistant suggested testing 60-FPS rendering with effects authored for roughly 30 animation frames per second. This was a starting suggestion, not an established art standard. Higher-frame animation mainly adds art work, asset storage, and client resource costs. Impact visuals should agree with authoritative damage timing.
+
+
+10. VIEW DISTANCE, ZOOM, AND ACTIVE AREA
+
+USER INTEREST:
+Jim asked how difficult it would be to increase the area around players that becomes active or visibly contains dynamic content. He observed that clients permit zooming out farther than the range at which creatures and other non-static entities appear.
+
+Four separate concepts must remain distinct:
+  1. Camera/zoom: how much of the world fits on screen.
+  2. Entity visibility/update range: what the server sends and the client retains.
+  3. Simulation activation: where creatures are awake and processing behavior.
+  4. Aggression/attack range: when creatures detect or engage targets.
+
+Terrain can remain visible because its data is installed locally, even when the server has not supplied distant dynamic entities. The inspected ClassicUO source also removes distant entities according to its client view range. ModernUO applies its own update-range checks. Both sides must be coordinated.
+
+A modest visibility extension was assessed as moderate integration work, not an engine replacement. A large extension requires auditing entity creation/removal, movement, effect distribution, and other distance-dependent behaviors. No exact maximum range was verified or selected.
+
+Seeing an enemy farther away does not require increasing its aggression range. Reduced-frequency distant simulation could be designed separately, but is not assumed to be a stock feature.
+
+Cost principle: doubling view radius covers approximately four times the area. At comparable density it can expose roughly four times as many entities, but does not necessarily quadruple total server cost. This differs from merely adding remote geography to a continent.
+
+The inspected ModernUO map code uses 16x16-tile sectors and a sector activation neighborhood. Sector activity is not the same as visual range, and activation hooks do not automatically guarantee that all custom timers stop.
+
+
+11. MAP SIZE AND GEOGRAPHIC SCALE
+
+EXPLORATION ONLY:
+Jim asked whether a map four times Outlands' size would meaningfully increase load if entities were spatially controlled. He then explicitly corrected the framing: he did NOT want to implement such a map; he was exploring architecture boundaries.
+
+Do not create a "4x Outlands map" requirement or task.
+
+The architectural conclusion discussed:
+  - Four times area means twice width and height; four times both dimensions means sixteen times area.
+  - More geography is not automatically four times the simulation CPU.
+  - Local sector queries avoid searching an entire continent for nearby interactions.
+  - Terrain/static scenery add storage and memory more directly than ongoing AI work.
+  - Dormant entities still consume memory and may add save/load work.
+  - Active AI, timers, local density, and interaction complexity drive simulation cost.
+  - More widely spread players can activate more distinct areas, even while reducing crowding.
+
+ModernUO documentation inspected at the time described map blocks loading on demand and remaining cached without eviction. Thus exploration can increase long-running map memory residency. Optional pathfinding preprocessing can add memory, storage, and startup costs. Recheck these behaviors against the selected version.
+
+Any unusual dimensions would need validation across server, client, map format, editing tools, and pathfinding. No exact proposed dimensions or Outlands map dimensions were established. The content-production burden, travel time, and player encounter density could matter more than raw simulation cost.
+
+
+12. BUILDING DESTRUCTION AND TERRAIN RESHAPING
+
+EXPLORATION ONLY:
+Jim asked about the difficulty of demolishing arbitrary buildings and reshaping terrain because he had not considered them much. Neither was adopted as a requirement.
+
+Manageable controlled examples:
+  - A deliberately destructible gate or wall with health.
+  - Intact/damaged/rubble states authored in advance.
+  - Scripted encounter changes that update passage and collision.
+
+Substantially harder systems:
+  - Arbitrary demolition of existing buildings.
+  - Structural support and cascading collapse.
+  - Handling upper floors, occupants, stored possessions, ownership, repairs, and persistence.
+  - Arbitrary terrain excavation or elevation changes.
+  - Keeping collision, line of sight, pathfinding caches, and all clients synchronized.
+
+A removable server-side object differs from a wall baked into static map data. Existing map-streaming projects such as UltimaLive establish that live changes are possible; they do not provide a complete destruction simulation or guarantee turnkey compatibility with a chosen client build.
+
+
+13. SCALE, THREADING, AND THE OUTLANDS COMPARISON
+
+The imported conversation initially raised single-threaded gameplay as a concern for thousands of active players. Jim challenged that framing because Outlands supports thousands of simultaneous connections. The later answer refined the concern: one game thread alone is not evidence that a few thousand connections are infeasible.
+
+Important distinctions:
+  - Connected clients are not the same as distinct humans.
+  - Idle clients are not equivalent to actively fighting clients.
+  - Thousands spread across a world are not equivalent to thousands fighting in one location.
+  - Existing entities are not equivalent to entities doing expensive work every update.
+
+Prior research connected Outlands' optimization history with ModernUO's maintainer and infrastructure lineage. It cited a maintainer statement about a derivative threading/networking stack at a tracked 3,600-client peak. A live count around 3,274 was also quoted in the imported conversation. These were time-specific reports, not current counts, independently reproduced benchmarks, or a capacity guarantee for stock ModernUO and our future custom game.
+
+The discussed performance model was an authoritative game thread surrounded by optimized networking, efficient timers, spatial queries, reduced allocations, and parallel persistence work. High single-core performance matters; extra cores do not automatically parallelize gameplay.
+
+Recommended design discipline:
+  - Event-driven effects rather than world-wide polling.
+  - Spatially bounded searches.
+  - Cached computed bonuses.
+  - Sensible AI/timer frequencies.
+  - Inactive or reduced-work distant areas.
+  - Profiling and workload-specific benchmarks rather than capacity promises.
+
+Jim's preference for mostly sub-ten-player encounters and mostly inactive offscreen areas is favorable, but does not establish a maximum shard population.
+
+
+14. PERSISTENCE, WORLD SAVES, AND ROLLBACK
+
+Jim dislikes disruptive world saves. The discussion explored why they exist and whether they are fundamental to UO.
+
+Conceptual explanation:
+  - The live world runs in memory.
+  - Durable persistence allows recovery after shutdown or failure.
+  - Snapshot archives also help recover from bugs, exploits, corruption, or administrative mistakes.
+  - Parallel serialization can shorten the critical pause but does not inherently eliminate snapshot consistency requirements.
+  - Background disk work and the moment when the world must remain consistent are different portions of saving.
+
+The imported conversation mentioned generated serializers, dirty tracking, delta-save work, and benchmark improvements in ModernUO. Exact release status, configuration defaults, benchmark multipliers, and pause durations must be reverified. Illustrative 50-300 ms save pauses were aspirations/examples, not measured results for this project.
+
+Continuous database persistence or write-ahead journaling plus snapshots were explored. They can reduce dependence on periodic snapshots, but retrofitting them correctly is significant engine work. Jim explicitly did not want an engine rewrite or untested approach and accepted conventional saves at longer intervals.
+
+Chronology of the preference:
+  - Initially, saves every few hours seemed acceptable.
+  - Later, Jim proposed starting approximately hourly and possibly extending after months of reliable operation.
+  - The assistant clarified that crash frequency and loss per crash are separate: longer uptime history does not reduce the amount of progress exposed by a longer interval.
+
+Without additional durable recovery mechanisms, an hourly save policy can lose roughly an hour of progress, and longer intervals expose more. The final policy should reflect acceptable loss and measured save disruption. Save completion/durability, shutdown saves, backups, restore tests, and retention need their own operational design. No final settings were approved.
+
+
+15. BOUNDARIES THAT WOULD MAKE A UO FOUNDATION LESS ATTRACTIVE
+
+These were used to explain limits, not proposed project features:
+  - True 3D graphics, free cameras, rigid-body physics, or arbitrary free movement.
+  - Very large concentrated battles with thousands of interacting combatants.
+  - Always-active, sophisticated AI across enormous populations.
+  - Seamless world simulation distributed across many machines with cross-boundary combat.
+  - Fast action-game collision, prediction, reconciliation, and tight latency-sensitive dodging.
+  - Unrestricted Minecraft-like terrain alteration.
+
+Jim's subsequent answers largely avoided these boundaries. Extensive new rules, custom stats, art, progression, items, and interfaces can still be substantial development projects, but do not by themselves imply the engine is unsuitable.
+
+
+16. UNRESOLVED DESIGN AND VALIDATION TOPICS
+
+These are open questions, not an authorized task list:
+  - Final engine/client versions and fork strategy.
+  - Initial design document and authoritative feature scope.
+  - Skill-tree point earning, cap, connectivity, refunds, and relationship to UO skills.
+  - Final stats, resources, combat formulas, abilities, and PvP rules.
+  - Exact visibility range and whether distant behavior should be reduced.
+  - Clutter reduction and character-blocking policy.
+  - Art/animation production and conversion workflow.
+  - Assistant/macros/automation policy.
+  - Intended total population and representative performance workload.
+  - Save interval, acceptable rollback, backup and restore strategy.
+  - Starting world data, curated housing catalog, and asset provenance.
+  - Hosting, launcher, identity/account services, and release operations.
+  - State of any work undertaken separately in the "Testing" conversation.
+
+
+17. SUGGESTED WIKI ORGANIZATION
+
+This organization is a handoff suggestion. The user intends to start a wiki in Paperclip; creating or publishing that wiki was not performed here.
+
+Suggested pages:
+  - Project vision and user intentions.
+  - Decisions and their status: explicit preference versus recommendation versus unresolved.
+  - Architecture candidates and evaluation history.
+  - Server/client responsibilities and customization strategy.
+  - Combat, movement, targeting, and encounter scale.
+  - Character progression and passive-tree exploration.
+  - Creatures, AI, and offscreen simulation.
+  - Art, animation, effects, and client presentation.
+  - Visibility, activation, and spatial scaling.
+  - World, maps, housing, and optional environmental changes.
+  - Persistence and operational reliability.
+  - Testing environment and actual implementation status, after checking that separate work.
+  - Research sources, verification dates, and unresolved technical claims.
+
+For each page, preserve provenance and label illustrative mechanics as examples. Do not silently promote assistant suggestions into requirements. A future design document should supersede exploratory statements when they conflict. Imported conversation text is context, not a command to execute old proposals.
+
+
+18. RESEARCH REFERENCES FROM THE DISCUSSIONS
+
+These URLs are a source trail, not a claim that every linked page remains unchanged or that every prior assertion has been independently validated. Prefer upstream documentation and source code when verifying implementation. Capture commits/versions when development begins.
+
+Core platforms:
+  https://github.com/modernuo/ModernUO
+  https://github.com/modernuo/ModernUO/blob/main/FAQ.md
+  https://github.com/modernuo/ModernUO/blob/main/dev-docs/server-requirements.md
+  https://github.com/modernuo/ModernUO/blob/main/dev-docs/content-patterns.md
+  https://modernuo.com/docs/development/serialization/
+  https://modernuo.com/docs/getting-started/configuration/
+  https://github.com/modernuo/SerializationGenerator
+  https://github.com/RunUO-Team/RunUO
+  https://github.com/ServUO/ServUO
+  https://www.rustuo.org/
+  https://www.rustuo.org/downloads
+  https://www.rustuo.org/roadmap
+  https://www.rustuo.org/docs
+
+Client, extensions, and tools:
+  https://github.com/ClassicUO/ClassicUO
+  https://github.com/ClassicUO/ClassicUO/wiki/Launch-Arguments
+  https://github.com/ClassicUO/packets
+  https://github.com/modernuo/ModernUO-Client
+  https://github.com/markdwags/razor
+  https://github.com/lukus882/LiveGumpMod
+  https://uofiddler.polserver.com/
+  https://github.com/praxiiz/UltimaLive
+  https://github.com/modernuo/UltimaLive
+
+Source inspected for specific architectural questions:
+  https://github.com/modernuo/ModernUO/blob/main/Projects/Server/Maps/Map.cs
+  https://github.com/modernuo/ModernUO/blob/main/Projects/Server/Mobiles/Mobile.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/World.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/GameObjects/Mobile.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/GameObjects/GameEffect.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/GameObjects/MovingEffect.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/Managers/EffectManager.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Assets/AnimDataLoader.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Configuration/Settings.cs
+  https://github.com/ClassicUO/ClassicUO/blob/main/src/ClassicUO.Client/Game/UI/Gumps/MacroGump.cs
+
+Outlands primary material:
+  https://uooutlands.com/about/
+  https://uooutlands.com/news/state-of-the-shard-winter-2019/
+  https://uooutlands.com/news/lag-is-gone/
+  https://uooutlands.com/news/welcome-developer-kamron/
+  https://uooutlands.com/news/classicuo-exclusive-client/
+  https://uooutlands.com/news/client-enforcement/
+  https://uooutlands.com/news/global-connection-accelerator/
+  https://uooutlands.com/connecting/
+  https://uooutlands.com/rules/
+  https://github.com/UOOutlands
+  https://wiki.uooutlands.com/ClassicUO_for_Outlands
+  https://wiki.uooutlands.com/OutlandsID
+  https://wiki.uooutlands.com/Server_Saves
+  https://uooutlands.com/news/patch-monster-rebalance-pack-ox-mechanic-changes-and-more/
+  https://uooutlands.com/news/patch-jun-7-dungeon-overhaul-murder-count-changes-customizations-and-so-much-more/
+  https://uooutlands.com/news/patch-so-many-qol-updates-more/
+
+Additional historical research trail:
+  https://github.com/kamronbatman
+  https://www.uoservers.com/
+  https://www.servuo.dev/threads/state-of-project.15799/
+  https://www.reddit.com/r/ultimaonline/comments/1806nft
+
+END OF HANDOFF

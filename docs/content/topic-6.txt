@@ -1,0 +1,18 @@
+USER INTENTION:
+Jim wants to explore implementing a point system similar to Path of Exile's skill tree. The assistant interpreted this as earning points and allocating them through connected passive nodes. Exact progression rules remain undecided.
+
+Proposed components:
+  - Point earning, caps, starting nodes, prerequisites, and connectivity checks.
+  - Persistent per-character allocations and unspent points.
+  - Bonuses, unlocks, and playstyle-changing mechanics.
+  - Allocation and refund validation on the server.
+  - Client presentation with connections, tooltips, state highlighting, and potentially panning, zoom, and search.
+  - A versioning/migration policy will be needed if node definitions change; this is a future design concern, not a resolved implementation.
+
+A small prototype could use a server-driven UO window. A large, fluid tree would likely warrant a dedicated ClassicUO interface.
+
+The assistant suggested supplementing UO skills first: for example, a skill determines access to spells while passives specialize their use. Replacing parts of the skill system remains possible. Jim did not decide between supplementation and replacement.
+
+Ordinary bonuses could be recalculated when builds change and cached. Combat should consult relevant totals/effects rather than scan every tree node on every hit. A tree's difficulty depends more on what nodes do and how they interact than on the number of visible nodes.
+
+Illustrative node examples included more health, longer poison duration, health-funded casting, a single stronger pet, and a damage-for-health tradeoff. These were not approved abilities or balance values. An initial 30-50-node prototype was an assistant suggestion, not an agreed milestone.

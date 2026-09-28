@@ -1,0 +1,19 @@
+Jim dislikes disruptive world saves. The discussion explored why they exist and whether they are fundamental to UO.
+
+Conceptual explanation:
+  - The live world runs in memory.
+  - Durable persistence allows recovery after shutdown or failure.
+  - Snapshot archives also help recover from bugs, exploits, corruption, or administrative mistakes.
+  - Parallel serialization can shorten the critical pause but does not inherently eliminate snapshot consistency requirements.
+  - Background disk work and the moment when the world must remain consistent are different portions of saving.
+
+The imported conversation mentioned generated serializers, dirty tracking, delta-save work, and benchmark improvements in ModernUO. Exact release status, configuration defaults, benchmark multipliers, and pause durations must be reverified. Illustrative 50-300 ms save pauses were aspirations/examples, not measured results for this project.
+
+Continuous database persistence or write-ahead journaling plus snapshots were explored. They can reduce dependence on periodic snapshots, but retrofitting them correctly is significant engine work. Jim explicitly did not want an engine rewrite or untested approach and accepted conventional saves at longer intervals.
+
+Chronology of the preference:
+  - Initially, saves every few hours seemed acceptable.
+  - Later, Jim proposed starting approximately hourly and possibly extending after months of reliable operation.
+  - The assistant clarified that crash frequency and loss per crash are separate: longer uptime history does not reduce the amount of progress exposed by a longer interval.
+
+Without additional durable recovery mechanisms, an hourly save policy can lose roughly an hour of progress, and longer intervals expose more. The final policy should reflect acceptable loss and measured save disruption. Save completion/durability, shutdown saves, backups, restore tests, and retention need their own operational design. No final settings were approved.
